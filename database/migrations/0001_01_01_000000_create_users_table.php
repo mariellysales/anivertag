@@ -16,28 +16,12 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('cpf', 14);
             $table->string('email', 255)->unique();
-            $table->string('password');
             $table->date('birth_date');
             $table->string('main_phone', 15);
+            $table->string('reference_contact_name', 225);
             $table->string('reference_contact', 15);
             $table->boolean('is_active');
-            $table->rememberToken();
             $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
         });
     }
 

@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Address;
-use App\Models\Bill;
+use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AddressController extends Controller
+class AdminController extends Controller
 {
     public function index() : JsonResponse
     {
-        $addresses = Address::orderby('id', 'DESC')->paginate(1);
+        $admins = Admin::orderby('id', 'DESC')->paginate(1);
 
         return response()->json([
             'status'=> true,
-            'address' => $addresses,
+            'admin' => $admins,
         ], 200);
     }
 
-    public function show(Address $address) : JsonResponse
+    public function show(Admin $admin) : JsonResponse
     {
         return response()->json([
             'status'=> true,
-            'address' => $address,
+            'admin' => $admin,
         ]);
     }
 }

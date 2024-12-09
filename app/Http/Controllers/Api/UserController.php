@@ -11,11 +11,19 @@ class UserController extends Controller
 {
     public function index() : JsonResponse
     {
-        $user = User::orderby('id', 'DESC')->paginate(1);
+        $users = User::orderby('id', 'DESC')->paginate(1);
 
         return response()->json([
             'status'=> true,
-            'address' => $user,
+            'user' => $users,
         ], 200);
+    }
+
+    public function show(User $user) : JsonResponse
+    {
+        return response()->json([
+            'status'=> true,
+            'user' => $user,
+        ]);
     }
 }

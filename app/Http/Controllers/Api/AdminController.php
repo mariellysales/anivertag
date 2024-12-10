@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -25,5 +27,35 @@ class AdminController extends Controller
             'status'=> true,
             'admin' => $admin,
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+
+        try{
+            $admin = Admin::create([
+                "name" => $request->name,
+                "email" => $request->email,
+                "password" => $request->password,
+                "is_active" => $request->is_active,
+                "is_admin" => $request->is_admin,
+            ]);
+            DB::commit();
+            
+            return response()->json([
+                'status'=> true,
+                'address' => $admin,
+                'message' => 'Administrador cadastrado com sucesso!'
+            ], 201);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Operação não concluída: administrador não cadastrado!'
+            ], 400);
+        }
+
     }
 }

@@ -41,33 +41,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        DB::table('addresses')->insert([
-            [
-                'postal_code' => '86188-00',
-                'street' => 'Coronel João Gualberto',
-                'number' => '739',
-                'additional_information'=> 'Casa',
-                'neighborhood' => 'Jardim Silvino',
-                'city' => 'Londrina',
-                'state' => 'Paraná',
-                'country' => 'Brasil',
-                'user_id' => $user1_id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'postal_code' => '86188-00',
-                'street' => 'Coronel João Gualberto',
-                'number' => '739',
-                'additional_information'=> 'Casa',
-                'neighborhood' => 'Jardim Silvino',
-                'city' => 'Londrina',
-                'state' => 'Paraná',
-                'country' => 'Brasil',
-                'user_id' => $user2_id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        cache()->put('user1_id', $user1_id);
+        cache()->put('user2_id', $user2_id);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -28,7 +29,7 @@ class AddressController extends Controller
         ]); 
     }
 
-    public function store(Request $request)
+    public function store(AddressRequest $request)
     {
         DB::beginTransaction();
 

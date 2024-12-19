@@ -59,4 +59,59 @@ class AdminController extends Controller
         }
 
     }
+
+    public function update(AdminRequest $request, Admin $admin)
+    {
+        DB::beginTransaction();
+
+        try{
+        $admin->update([
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => $request->password,
+            "is_active" => $request->is_active,
+            "is_admin" => $request->is_admin,
+        ]);
+
+        DB::commit();
+
+        return response()->json([
+            'status'=> true,
+            'address' => $admin,
+            'message' => 'Administrador editado com sucesso!'
+        ], 201);
+
+
+        }catch (Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Operação não concluída: administrador não editado!'
+            ], 400);
+        }
+    }
+
+    public function destroy(Admin $admin)
+    {
+        try{
+            
+            $admin->delete();
+    
+            return response()->json([
+                'status'=> true,
+                'address' => $admin,
+                'message' => 'Administrador apagado com sucesso!'
+            ], 201);
+    
+    
+            }catch (Exception $e){
+                DB::rollBack();
+    
+                return response()->json([
+                    'status'=> true,
+                    'message' => 'Operação não concluída: administrador não apagado!'
+                ], 400);
+            }
+    }
 }

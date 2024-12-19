@@ -62,4 +62,57 @@ class AddressController extends Controller
         }
 
     }
+
+    public function update(AddressRequest $request, Address $address)
+    {
+        try{
+            $address->update([
+            "postal_code" => $request->postal_code,
+            "street" => $request->street,
+            "number" => $request->number,
+            "additional_information" => $request->additional_information,
+            "neighborhood" => $request->neighborhood,
+            "city" => $request->city,
+            "state" => $request->state,
+            "country" => $request->country,
+            "user_id" => $request->user_id
+            ]);
+            DB::commit();
+            
+            return response()->json([
+                'status'=> true,
+                'address' => $address,
+                'message' => 'Endereço editado com sucesso!'
+            ], 201);
+            
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Operação não concluída: endereço não editado!'
+            ], 400);
+        }
+    }
+
+    public function destroy(Address $address)
+    {
+        try{
+            $address->delete();
+            
+            return response()->json([
+                'status'=> true,
+                'address' => $address,
+                'message' => 'Endereço apagado com sucesso!'
+            ], 201);
+            
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Operação não concluída: endereço não apagado!'
+            ], 400);
+        }
+    }
 }

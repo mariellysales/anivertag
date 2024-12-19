@@ -35,7 +35,7 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try{
-            $users = User::create([
+            $user = User::create([
                 "name" => $request->name,
                 "cpf" => $request->cpf,
                 "email" => $request->email,
@@ -50,7 +50,7 @@ class UserController extends Controller
             
             return response()->json([
                 'status'=> true,
-                'address' => $users,
+                'address' => $user,
                 'message' => 'Usuário cadastrado com sucesso!'
             ], 201);
         }catch(Exception $e){
@@ -59,6 +59,67 @@ class UserController extends Controller
             return response()->json([
                 'status'=> true,
                 'message' => 'Operação não concluída: usuário não cadastrado!'
+            ], 400);
+        }
+    }
+
+    public function update(UserRequest $request, User $user)
+    {
+        try{
+            try{
+                $user->update([
+                    "name" => $request->name,
+                    "cpf" => $request->cpf,
+                    "email" => $request->email,
+                    "birth_date" => $request->birth_date,
+                    "neighborhood" => $request->neighborhood,
+                    "main_phone" => $request->main_phone,
+                    "reference_contact_name" => $request->reference_contact_name,
+                    "reference_contact" => $request->reference_contact,
+                    "is_active" => $request->is_active
+                ]);
+                DB::commit();
+                
+                return response()->json([
+                    'status'=> true,
+                    'address' => $user,
+                    'message' => 'Usuário editado com sucesso!'
+                ], 201);
+            }catch(Exception $e){
+                DB::rollBack();
+    
+                return response()->json([
+                    'status'=> true,
+                    'message' => 'Operação não concluída: usuário não editado!'
+                ], 400);
+            }
+
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Operação não concluída: usuário não editado!'
+            ], 400);
+        }
+    }
+
+    public function destroy(User $user)
+    {
+        try{
+            $user->delete();
+            
+            return response()->json([
+                'status'=> true,
+                'address' => $user,
+                'message' => 'Usuário apagado com sucesso!'
+            ], 201);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status'=> true,
+                'message' => 'Operação não concluída: usuário não apagado!'
             ], 400);
         }
     }

@@ -36,7 +36,6 @@ class UserRequest extends FormRequest
             "cpf" => 'required',
             "email" => 'required',
             "birth_date" => 'required',
-            "neighborhood" => 'required',
             "main_phone" => 'required',
         ];
     }

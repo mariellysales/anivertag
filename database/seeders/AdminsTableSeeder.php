@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AdminsTableSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class AdminsTableSeeder extends Seeder
         DB::table('admins')->insertGetId([
             'name' => 'Marielly Sales de Moraes',
             'email' => 'mariellysales01@gmail.com',
-            'password' =>'123456',
+            'password' => Hash::make('123456'),
             'is_active' => true,
             'is_admin' => true,
             'created_at' => now(),

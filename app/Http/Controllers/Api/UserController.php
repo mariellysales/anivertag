@@ -58,7 +58,8 @@ class UserController extends Controller
 
             return response()->json([
                 'status'=> true,
-                'message' => 'Operação não concluída: usuário não cadastrado!'
+                'message' => 'Operação não concluída: usuário não cadastrado!',
+                'error' => $e->getMessage()
             ], 400);
         }
     }
@@ -90,7 +91,8 @@ class UserController extends Controller
     
                 return response()->json([
                     'status'=> true,
-                    'message' => 'Operação não concluída: usuário não editado!'
+                    'message' => 'Operação não concluída: usuário não editado!',
+                    'error' => $e->getMessage()
                 ], 400);
             }
 
@@ -99,7 +101,8 @@ class UserController extends Controller
 
             return response()->json([
                 'status'=> true,
-                'message' => 'Operação não concluída: usuário não editado!'
+                'message' => 'Operação não concluída: usuário não editado!',
+                'error' => $e->getMessage()
             ], 400);
         }
     }

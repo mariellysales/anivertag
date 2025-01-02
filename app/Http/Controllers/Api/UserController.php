@@ -309,13 +309,11 @@ class UserController extends Controller
             });
         }   
 
-        if (!empty($filters['date'])) {
-            $query->whereDate('birth_date', $filters['date']);
-        }
-
         if (!empty($filters['start_date']) && !empty($filters['end_date'])) {
             $query->whereBetween('birth_date', [$filters['start_date'], $filters['end_date']]);
-        }
+        } elseif (!empty($filters['start_date'])) {
+            $query->whereDate('birth_date', $filters['start_date']);
+        }        
 
         $users = $query->orderBy('id', 'DESC')->paginate(10);
 
